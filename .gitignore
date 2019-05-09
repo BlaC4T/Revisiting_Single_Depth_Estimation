@@ -1,0 +1,9 @@
+
+*.pth
+*.png
+*.jpg
+pretrained_model/model_densenet
+pretrained_model/model_resnet
+pretrained_model/model_senet
+pretrained_model/model_senet
+pretrained_model/model_senet

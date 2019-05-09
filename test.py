@@ -8,7 +8,7 @@ import loaddata
 import util
 import numpy as np
 import sobel
-
+import cv2
 
 def main():
     model = define_model(is_resnet=False, is_densenet=False, is_senet=True)
@@ -16,7 +16,9 @@ def main():
     model.load_state_dict(torch.load('./pretrained_model/model_senet'))
 
     test_loader = loaddata.getTestingData(1)
-    test(test_loader, model, 0.25)
+    print('Start Test')
+    with torch.no_grad():
+        test(test_loader, model, 0.25)
 
 
 def test(test_loader, model, thre):
@@ -33,6 +35,7 @@ def test(test_loader, model, thre):
                 'MAE': 0,  'DELTA1': 0, 'DELTA2': 0, 'DELTA3': 0}
 
     for i, sample_batched in enumerate(test_loader):
+        print(i, "th Batch Start")
         image, depth = sample_batched['image'], sample_batched['depth']
 
         depth = depth.cuda(async=True)
@@ -43,6 +46,8 @@ def test(test_loader, model, thre):
  
         output = model(image)
         output = torch.nn.functional.upsample(output, size=[depth.size(2),depth.size(3)], mode='bilinear')
+
+        cv2.imwrite('image_'+str(i)+'.png', output.cpu().numpy())
 
         depth_edge = edge_detection(depth)
         output_edge = edge_detection(output)

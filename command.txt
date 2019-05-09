@@ -1,0 +1,64 @@
+cd D:\Workspace\Revisiting_Single_Depth_Estimation
+D:
+activate python36
+python demo.py
+
+cd data
+cd demo
+python frame2video.py
+
+
+00213
+type Inter :  <class 'numpy.ndarray'>
+shape Inter :  (20, 80)
+Obj Inter :  69.5752301590909
+Hum Inter :  83.73010371561674
+Avg Inter :  69.6183314375
+Max Inter :  215.0947
+Min Inter :  29.7764
+
+01154
+type Inter :  <class 'numpy.ndarray'>
+shape Inter :  (25, 80)
+Obj Inter :  73.38637120454545
+Hum Inter :  85.71782586331108
+Avg Inter :  73.57514970000001
+Max Inter :  215.90349999999998
+Min Inter :  29.7764
+
+01155
+type Inter :  <class 'numpy.ndarray'>
+shape Inter :  (83, 80)
+Obj Inter :  71.49821340909091
+Hum Inter :  86.81876822345599
+Avg Inter :  71.48119557228915
+Max Inter :  215.96359999999996
+Min Inter :  29.7764
+
+01157
+type Inter :  <class 'numpy.ndarray'>
+shape Inter :  (58, 80)
+Obj Inter :  70.41521427272728
+Hum Inter :  85.26582936905302
+Avg Inter :  70.37393881465518
+Max Inter :  215.73559999999995
+Min Inter :  29.7764
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
