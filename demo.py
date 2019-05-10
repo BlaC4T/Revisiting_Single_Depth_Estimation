@@ -37,8 +37,8 @@ def main():
     model.load_state_dict(torch.load('./pretrained_model/model_senet'))
     model.eval()
 
-    DetList = json.load( open( 'data/demo/2a0501.json' ) )
-    indir = 'data/demo/inputs'
+    DetList = json.load( open( 'data/test/hoi_01.json' ) )
+    indir = 'data/test/hoi_01'
     inframes = [f for f in os.listdir(indir) if os.path.isfile(os.path.join(indir, f))]
     inframes.sort(key = lambda x: int(x.split('.')[0]))
 
@@ -50,7 +50,7 @@ def main():
 
         if str(int(fid)) not in DetList.keys():
             outframe = ori_frame
-            outframe.save('data/demo/outputs/'+fid+'.jpg')
+            outframe.save('data/test/outputs/'+fid+'.jpg')
             print(fid)
 
 
@@ -73,7 +73,7 @@ def test(fid, detframe, nyu2_loader, model, ori_frame):
 ##################################BBOX#################################33
 
         # print(out.shape)
-        im_file = 'data/demo/depths/'+ fid +'.jpg'
+        im_file = 'data/test/depths/'+ fid +'.jpg'
         # print(out.view(out.size(2),out.size(3)).data.cpu().numpy().shape)
 ##################################################################################
         matplotlib.image.imsave(im_file, out.view(out.size(2),out.size(3)).data.cpu().numpy())
@@ -100,7 +100,9 @@ def test(fid, detframe, nyu2_loader, model, ori_frame):
         ax.imshow(np.asarray(ori_frame), interpolation='nearest')
         print(im_data.shape)
 
-        O_box = [240.0, 180.0, 350.0, 260.0]
+        # O_box = [240.0, 180.0, 350.0, 260.0]
+        O_box = [560.0, 95.0, 730.0, 290.0]
+        
         QO_width = int(0.25*(O_box[2] - O_box[0]))
         QO_height = int(0.25*(O_box[3] - O_box[1]))
         NO_box = [int(O_box[0] + QO_width), int(O_box[1] + QO_height), int(O_box[2] - QO_width), int(O_box[3] - QO_height)]
@@ -119,6 +121,10 @@ def test(fid, detframe, nyu2_loader, model, ori_frame):
                 PerList = detframe[obj]
                 for person in PerList:
                     P_box = person['bbox']
+                    P_box[0] = min(width, max(0.0, P_box[0]))
+                    P_box[2] = min(width, max(0.0, P_box[2]))
+                    P_box[1] = min(height, max(0.0, P_box[1]))
+                    P_box[3] = min(height, max(0.0, P_box[3]))
                     P_score = person['score']
 
                     QP_width = int(0.25*(P_box[2] - P_box[0]))
@@ -170,7 +176,7 @@ def test(fid, detframe, nyu2_loader, model, ori_frame):
                         #     print("Avg Inter : ", np.mean(InterDepth))
                         #     print("Max Inter : ", np.max(im_data))
                         #     print("Min Inter : ", np.min(im_data))
-        plt.savefig('data/demo/outputs/'+ fid +'.jpg')
+        plt.savefig('data/test/outputs/'+ fid +'.jpg')
         plt.close()
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ activate python36
 python demo.py
 
 cd data
-cd demo
+cd test
 python frame2video.py
 
 

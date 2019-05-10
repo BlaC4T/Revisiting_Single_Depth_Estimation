@@ -7,3 +7,5 @@ pretrained_model/model_resnet
 pretrained_model/model_senet
 pretrained_model/model_senet
 pretrained_model/model_senet
+*.mp4
+*.avi
